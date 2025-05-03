@@ -1,13 +1,13 @@
 console.log('[EXT] Script injected into iCloud iframe');
 
-function parseJapaneseDate(str) {
-    const standard = str.match(/^(\d{4})\/(\d{1,2})\/(\d{1,2})、(\d{1,2}):(\d{2})/);
+function parseReminderDate(str) {
+    const standard = str.match(/^(\d{4})\/(\d{1,2})\/(\d{1,2})[、,] ?(\d{1,2}):(\d{2})/);
     if (standard) {
         const [_, year, month, day, hour, minute] = standard;
         return new Date(year, month - 1, day, hour, minute);
     }
 
-    const fallback = str.match(/^([^\d])(\d{1,2}):(\d{2})/);
+    const fallback = str.match(/^([^\d])?(\d{1,2}):(\d{2})/);
     if (fallback) {
         const [_, _prefix, hour, minute] = fallback;
         const now = new Date();
@@ -28,7 +28,7 @@ function sortRowgroup(rowgroup) {
     const itemsWithDate = items.map(item => {
         const dateSpan = item.querySelector('span.due-date span');
         const dateText = dateSpan?.textContent.trim() || '';
-        const parsedDate = parseJapaneseDate(dateText);
+        const parsedDate = parseReminderDate(dateText);
         return { item, date: parsedDate };
     });
 
