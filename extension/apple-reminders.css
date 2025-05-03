@@ -1,0 +1,71 @@
+nav {
+    display: none !important;
+}
+
+.rm-list {
+    background-color: #11100f !important;
+}
+
+.o365sx-navbar,
+.cloudos-toolbar.app,
+.cloudos-toolbar.page,
+.rm-list-header.regular {
+    background-color: #1B1A19 !important;
+}
+
+.main-section {
+    display: none;
+}
+
+header,
+.list-back-button {
+    display: none !important;
+}
+
+.rm-list-header.compact ui-button.push.icon.list-detail-button {
+    margin: 0px !important;
+}
+
+.rm-list-header .compact:before {
+    content: "To Do";
+    color: #fff;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 22px;
+    --tint-color: #fff;
+    font-weight: 700;
+}
+
+.rm-list-header .compact div {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.rm-list-header .compact div ui-button {
+    padding: 5px;
+}
+
+.rm-list-header .compact {
+    block-size: 3.5rem !important;
+}
+
+.rm-list-header {
+    width: 92%;
+    border-bottom: 1px solid #464646 !important;
+    background: #1B1A19;
+}
+
+.reminder-list-items {
+    overflow: hidden !important;
+    opacity: 0;
+    animation: fadeInReminders 0.5s ease 3s forwards;
+}
+
+@keyframes fadeInReminders {
+    to {
+        opacity: 1;
+    }
+}
