@@ -1,21 +1,24 @@
 console.log('[EXT] Script injected into iCloud iframe');
 
-function parseReminderDate(str) {
-    const standard = str.match(/^(\d{4})\/(\d{1,2})\/(\d{1,2})[、,] ?(\d{1,2}):(\d{2})/);
+function parseJapaneseDate(str) {
+    const standard = str.match(/^(\d{4})\/(\d{1,2})\/(\d{1,2})[、,]\s?(\d{1,2}):(\d{2})/);
     if (standard) {
         const [_, year, month, day, hour, minute] = standard;
         return new Date(year, month - 1, day, hour, minute);
     }
 
-    const fallback = str.match(/^([^\d])?(\d{1,2}):(\d{2})/);
-    if (fallback) {
-        const [_, _prefix, hour, minute] = fallback;
+    const relative = str.match(/^(今日|明日|昨日)(\d{1,2}):(\d{2})/);
+    if (relative) {
+        const [_, label, hour, minute] = relative;
         const now = new Date();
-        now.setHours(parseInt(hour, 10));
-        now.setMinutes(parseInt(minute, 10));
-        now.setSeconds(0);
-        now.setMilliseconds(0);
-        return now;
+        let base = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+
+        if (label === '明日') base.setDate(base.getDate() + 1);
+        else if (label === '昨日') base.setDate(base.getDate() - 1);
+
+        base.setHours(parseInt(hour, 10));
+        base.setMinutes(parseInt(minute, 10));
+        return base;
     }
 
     return new Date(9999, 0, 1);
@@ -28,7 +31,7 @@ function sortRowgroup(rowgroup) {
     const itemsWithDate = items.map(item => {
         const dateSpan = item.querySelector('span.due-date span');
         const dateText = dateSpan?.textContent.trim() || '';
-        const parsedDate = parseReminderDate(dateText);
+        const parsedDate = parseJapaneseDate(dateText);
         return { item, date: parsedDate };
     });
 
