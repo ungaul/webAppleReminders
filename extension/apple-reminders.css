@@ -62,10 +62,27 @@ header,
     overflow: hidden !important;
     opacity: 0;
     animation: fadeInReminders 0.5s ease 3s forwards;
+    animation-delay: 5s;
 }
 
 @keyframes fadeInReminders {
     to {
         opacity: 1;
     }
+}
+
+ui-screen-reader-only-content:not(div[role="columnheader"]) {
+    position: relative !important;
+    opacity: 1 !important;
+    pointer-events: all !important;
+}
+
+div[role="columnheader"] {
+    position: absolute !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+}
+
+div[aria-relevant="additions text"] {
+    display: none !important;
 }
